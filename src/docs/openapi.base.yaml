@@ -1,0 +1,19 @@
+openapi: 3.1.0
+info:
+  title: Codeflow Docs
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+paths: {}

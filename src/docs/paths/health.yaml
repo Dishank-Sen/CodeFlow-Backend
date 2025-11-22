@@ -1,0 +1,15 @@
+paths:
+  /api/v1/health/ping:
+    get:
+      summary: Health check endpoint
+      description: Returns "pong" to confirm that the server is running.
+      tags:
+        - Health
+      responses:
+        "200":
+          description: Server is online
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong

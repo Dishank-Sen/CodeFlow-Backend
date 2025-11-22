@@ -1,0 +1,77 @@
+paths:
+  /api/v1/profile:
+    get:
+      summary: Get authenticated user's profile data
+      description: Returns the authenticated user's basic information. Requires a valid JWT from HttpOnly cookie or Authorization header.
+      tags:
+        - Profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: user detail retrieved successfully
+                  data:
+                    type: object
+                    properties:
+                      userId:
+                        type: string
+                        example: 65c1234abc7890def1234567
+                      userName:
+                        type: string
+                        example: dishank_01
+                      profileImg:
+                        type: string
+                        example: https://cloudinary.com/abc/user.png
+
+        "401":
+          description: User info missing or invalid JWT
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: NO-USER-INFO
+                  message:
+                    type: string
+                    example: No user info found
+
+        "404":
+          description: User does not exist in database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: USER-NOT_FOUND
+                  message:
+                    type: string
+                    example: user not exists
+
+        "500":
+          description: Server error while fetching profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: SERVER-ERROR
+                  message:
+                    type: string
+                    example: internal server error
+                  data:
+                    nullable: true
+                    example: null

@@ -1,0 +1,87 @@
+paths:
+  /api/v1/repos/new:
+    post:
+      summary: Create a new repository for the authenticated user
+      description: >
+        Creates a new repository for the currently authenticated user, stores it in both
+        the User document and the Repo collection, and generates a remote URL.
+      tags:
+        - Repositories
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - repoName
+                - visibility
+              properties:
+                repoName:
+                  type: string
+                  example: codeflow-backend
+                description:
+                  type: string
+                  example: "Backend service for Codeflow"
+                visibility:
+                  type: string
+                  description: Repository visibility
+                  enum:
+                    - public
+                    - private
+                  example: public
+      responses:
+        "201":
+          description: Repository created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: repository created
+
+        "401":
+          description: User info missing or invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: NO-USER-INFO
+                  message:
+                    type: string
+                    example: No user info found
+
+        "409":
+          description: Repository name already taken for this user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: REPO-NAME-ALREADY-TAKEN
+                  message:
+                    type: string
+                    example: repository name already taken
+
+        "500":
+          description: Server error while creating repository
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: SERVER-ERROR
+                  message:
+                    type: string
+                    example: internal server error
