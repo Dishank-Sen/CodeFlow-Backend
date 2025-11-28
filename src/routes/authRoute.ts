@@ -1,8 +1,8 @@
 import express from "express";
 import loginController from "../controllers/login.controller.ts";
-import loginValidator from "../validators/loginValidator.ts";
+import loginValidator from "../validators/login.validator.ts";
 import signupController from "../controllers/signup.controller.ts";
-import signupValidator from "../validators/signupValidator.ts";
+import signupValidator from "../validators/signup.validator.ts";
 import logoutController from "../controllers/logout.controller.ts";
 import { signupUpload } from "../utils/upload.ts";
 import signupMiddleware from "../middleware/signupMiddleware.ts";

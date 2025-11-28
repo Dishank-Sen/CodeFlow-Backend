@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 type JwtUserPayload = {
   userId: string;
   userName: string;
+  email: string;
   profileImg: string;
 };
 

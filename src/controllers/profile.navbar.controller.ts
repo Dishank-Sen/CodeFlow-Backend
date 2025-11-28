@@ -8,7 +8,9 @@ const profileNavbarController = async (req: Request, res: Response) => {
     }
 
     const data = {
+      userId: user.userId,
       userName: user.userName,
+      email: user.email,
       profileImg: user.profileImg,
     };
 

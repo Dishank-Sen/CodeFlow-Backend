@@ -1,15 +1,17 @@
 paths:
-  /api/v1/profile:
+  /api/v1/repo/pinned:
     get:
-      summary: Get authenticated user's profile data
-      description: Returns the authenticated user's basic information. Requires a valid JWT from HttpOnly cookie or Authorization header.
+      summary: Get pinned repositories of authenticated user
+      description: >
+        Returns the list of repositories where `pinned = true` for the authenticated user.
+        The endpoint returns an array of repo documents (selected fields) belonging to the authenticated user.
       tags:
         - Profile
       security:
         - bearerAuth: []
       responses:
         "200":
-          description: User profile retrieved successfully
+          description: Pinned repositories retrieved successfully
           content:
             application/json:
               schema:
@@ -17,22 +19,27 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: user detail retrieved successfully
+                    example: "user detail retrieved successfully"
                   data:
-                    type: object
-                    properties:
-                      userId:
-                        type: string
-                        example: 65c1234abc7890def1234567
-                      userName:
-                        type: string
-                        example: dishank_01
-                      profileImg:
-                        type: string
-                        example: https://cloudinary.com/abc/user.png
-
+                    type: array
+                    description: Array of pinned repository objects (limited fields)
+                    items:
+                      type: object
+                      properties:
+                        repoName:
+                          type: string
+                          example: "codeflow"
+                        description:
+                          type: string
+                          example: "Personal codeflow project"
+                        stars:
+                          type: integer
+                          example: 120
+                        forks:
+                          type: integer
+                          example: 20
         "401":
-          description: User info missing or invalid JWT
+          description: Missing or invalid user authentication
           content:
             application/json:
               schema:
@@ -40,13 +47,12 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: NO-USER-INFO
+                    example: "NO-USER-INFO"
                   message:
                     type: string
-                    example: No user info found
-
+                    example: "No user info found"
         "404":
-          description: User does not exist in database
+          description: No pinned repositories for the authenticated user
           content:
             application/json:
               schema:
@@ -54,13 +60,12 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: USER-NOT_FOUND
+                    example: "NO-PINNED-REPO"
                   message:
                     type: string
-                    example: user not exists
-
+                    example: "no pinned repository"
         "500":
-          description: Server error while fetching profile
+          description: Server error while retrieving pinned repositories
           content:
             application/json:
               schema:
@@ -68,10 +73,10 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: SERVER-ERROR
+                    example: "SERVER-ERROR"
                   message:
                     type: string
-                    example: internal server error
+                    example: "internal server error"
                   data:
                     nullable: true
                     example: null

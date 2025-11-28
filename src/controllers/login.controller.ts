@@ -31,7 +31,7 @@ const loginController: RequestHandler = async (req: Request, res: Response) => {
     }
 
     // Generate JWT
-    const token = jwt.sign({ userId: user._id, userName: user.userName }, secret, {
+    const token = jwt.sign({ userId: user._id, userName: user.userName, email: user.email, profileImg: user.profileImg }, secret, {
       expiresIn: "30d",
     });
     
@@ -46,9 +46,10 @@ const loginController: RequestHandler = async (req: Request, res: Response) => {
     // Send user info to frontend; it can be stored in localStorage there
     res.status(200).json({
       message: "Login successful",
-      user: {
+      data: {
         userId: user._id,
         userName: user.userName,
+        email: user.email,
         profileImg: user.profileImg,
       },
     });

@@ -1,3 +1,4 @@
+// models/user.model.ts
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -5,12 +6,12 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   profileImg: { type: String, default: "" },
-  repository: [{
-    repoName: { type: String, required: true},
-    description: { type: String, default: ""},
-    visibility: {type: String, required: true},
-    pinned: {type: Boolean, default: false}
-  }]
+  repository: [{ type: mongoose.Schema.Types.ObjectId, ref: "Repo" }],
+  repoCount: { type: Number, default: 0 },
+  bio: { type: String, default: "" },
+  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  schemaVersion: { type: Number, default: 2 }
 }, { timestamps: true });
 
 export default mongoose.model("User", userSchema);

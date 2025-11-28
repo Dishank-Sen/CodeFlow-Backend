@@ -40,7 +40,7 @@ paths:
                   message:
                     type: string
                     example: Login successful
-                  user:
+                  data:
                     type: object
                     properties:
                       id:
@@ -49,6 +49,9 @@ paths:
                       userName:
                         type: string
                         example: Dishank
+                      email:
+                        type: string
+                        example: dishank@gmail.com
                       profileImg:
                         type: string
                         nullable: true

@@ -21,12 +21,17 @@ paths:
                   data:
                     type: object
                     properties:
+                      userId:
+                        type: string
+                        example: 32k4h3krjkn3
                       userName:
                         type: string
                         example: dishank_01
+                      email:
+                        type: string
+                        example: dishank@gmail.com
                       profileImg:
                         type: string
-                        nullable: true
                         example: https://cloudinary.com/abc/user.png
 
         "401":

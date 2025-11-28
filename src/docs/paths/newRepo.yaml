@@ -4,7 +4,8 @@ paths:
       summary: Create a new repository for the authenticated user
       description: >
         Creates a new repository for the currently authenticated user, stores it in both
-        the User document and the Repo collection, and generates a remote URL.
+        the User document and the Repo collection, and generates a remote URL. Request body
+        is validated (repoName pattern and visibility). Operation is atomic using transactions.
       tags:
         - Repositories
       security:
@@ -22,6 +23,9 @@ paths:
                 repoName:
                   type: string
                   example: codeflow-backend
+                  description: >
+                    Repository name. Allowed characters: letters, numbers, dot, underscore, hyphen.
+                    No spaces.
                 description:
                   type: string
                   example: "Backend service for Codeflow"
@@ -43,7 +47,62 @@ paths:
                   message:
                     type: string
                     example: repository created
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 64a7f3b2e7c8d12f1a2b3c4d
+                      repoName:
+                        type: string
+                        example: codeflow-backend
+                      userName:
+                        type: string
+                        example: Dishank-Sen
+                      description:
+                        type: string
+                        example: Backend service for Codeflow
+                      visibility:
+                        type: string
+                        example: public
+                      remoteUrl:
+                        type: string
+                        example: https://yourdomain.com/dishank/codeflow-backend
+                      pinned:
+                        type: boolean
+                        example: false
+                      stars:
+                        type: integer
+                        example: 0
+                      forks:
+                        type: integer
+                        example: 0
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2025-10-17T04:38:35.826Z"
 
+        "400":
+          description: Validation failed (bad request)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: VALIDATION_ERROR
+                  details:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        msg:
+                          type: string
+                        param:
+                          type: string
+                        location:
+                          type: string
         "401":
           description: User info missing or invalid
           content:

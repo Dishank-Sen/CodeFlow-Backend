@@ -8,7 +8,9 @@ const layoutNavbarController: RequestHandler = async (req: Request, res: Respons
     }
 
     const data = {
+      userId: user.userId,
       userName: user.userName,
+      email: user.email,
       profileImg: user.profileImg,
     };
 

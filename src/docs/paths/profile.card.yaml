@@ -21,13 +21,34 @@ paths:
                   data:
                     type: object
                     properties:
+                      userId:
+                        type: string
+                        description: Unique identifier of the authenticated user
+                        example: 68f0abffc8d1a0c71182c13f
                       userName:
                         type: string
-                        example: dishank_01
+                        example: Dishank-Sen
+                      email:
+                        type: string
+                        format: email
+                        example: dishank@gmail.com
                       profileImg:
                         type: string
                         nullable: true
-                        example: https://cloudinary.com/abc/user.png
+                        description: URL of the user's profile image
+                        example: https://res.cloudinary.com/dijo7olfy/image/upload/v1760675486/profileImages/ojd9ohscorq484db8znp.jpg
+                      bio:
+                        type: string
+                        description: Short bio or description of the user
+                        example: Backend developer and WebRTC enthusiast.
+                      followerCount:
+                        type: integer
+                        description: Total number of followers
+                        example: 12
+                      followingCount:
+                        type: integer
+                        description: Total number of users this user is following
+                        example: 7
 
         "401":
           description: Missing or invalid user authentication

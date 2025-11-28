@@ -5,6 +5,7 @@ declare module "express" {
     user?: {
       userId: string;
       userName: string;
+      email: string;
       profileImg: string;
     };
   }

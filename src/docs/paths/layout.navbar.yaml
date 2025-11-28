@@ -1,5 +1,5 @@
 paths:
-  /api/v1/auth/layout/navbar:
+  /api/v1/layout/navbar:
     get:
       summary: Get navbar layout data for the current user
       description: Returns minimal user information required to render the navbar.
@@ -21,12 +21,17 @@ paths:
                   data:
                     type: object
                     properties:
+                      userId:
+                        type: string
+                        example: 2sdk4534nkjhn
                       userName:
                         type: string
                         example: dishank_01
+                      email:
+                        type: string
+                        example: dishank@gmail.com
                       profileImg:
                         type: string
-                        nullable: true
                         example: https://cloudinary.com/abc/user.png
 
         "401":
