@@ -29,6 +29,7 @@ const newRepoController: RequestHandler = async (req: Request, res: Response) =>
 
     // normalize repoName for uniqueness (lowercase trim)
     const repoNameNormalized = repoName.trim().toLowerCase();
+    const userNameNormalized = user.userName.trim().toLowerCase();
 
     // find user (ensure exists and get username)
     const existingUser = await User.findById(user.userId).select("userName").lean();
@@ -70,6 +71,7 @@ const newRepoController: RequestHandler = async (req: Request, res: Response) =>
         const repoDoc = {
           ownerId: new mongoose.Types.ObjectId(user.userId),
           repoName,
+          userName: userNameNormalized,
           repoName_normalized: repoNameNormalized,
           description,
           remoteUrl,

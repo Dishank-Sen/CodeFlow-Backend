@@ -7,6 +7,7 @@ const repoSchema = new mongoose.Schema({
     required: true,
   },
   repoName: { type: String, required: true },
+  userName: { type: String, required: true, lowercase: true, index: true },
   repoName_normalized: { type: String, required: true },
   description: { type: String, default: "" },
   remoteUrl: { type: String, required: true },
@@ -21,5 +22,7 @@ repoSchema.index({ ownerId: 1, repoName_normalized: 1 }, { unique: true }); // u
 repoSchema.index({ ownerId: 1, updatedAt: -1 }); // listing by recent
 repoSchema.index({ ownerId: 1, pinned: 1 }, { partialFilterExpression: { pinned: true }});
 repoSchema.index({ repoName: "text", description: "text" });
+repoSchema.index({ userName: 1, visibility: 1, updatedAt: -1 }); // fast visitor query + sort
+repoSchema.index({ userName: 1, updatedAt: -1 }); // owner listing, fallback
 
 export default mongoose.model("Repo", repoSchema);

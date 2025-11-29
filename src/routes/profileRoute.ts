@@ -1,3 +1,4 @@
+import ProfileCardMiddleware from "../middleware/profileCardMiddleware.ts"
 import profileCardController from "../controllers/profile.card.controller.ts"
 import profileNavbarController from "../controllers/profile.navbar.controller.ts"
 import authenticateToken from "../middleware/authenticateToken.ts"
@@ -7,7 +8,7 @@ const router = express.Router()
 
 router.get(
     "/card",
-    authenticateToken,
+    ProfileCardMiddleware,
     profileCardController
 )
 
