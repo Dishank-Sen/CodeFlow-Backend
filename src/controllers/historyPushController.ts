@@ -2,7 +2,9 @@ import type { Request, Response } from "express";
 import unzipper from "unzipper";
 import { pipeline } from "stream/promises";
 import { Transform } from "stream";
-import Repo from "../models/repo.models.ts"
+// import Repo from "../models/repo.models.ts"
+import Timeline from "../models/timeline.push.model.ts"
+import mongoose from "mongoose";
 
 const historyPushController = async (req: Request, res: Response) => {
   try {
@@ -11,25 +13,34 @@ const historyPushController = async (req: Request, res: Response) => {
     
     let inserting = false;
     const batch: any[] = [];
-    const remoteUrl = "http://localhost:3000/Dishank-Sen/first"
+    // const remoteUrl = "http://localhost:3000/Dishank-Sen/first"
+    const ownerName = "user1"
+    const repoName = "first"
 
     async function flush() {
       if (inserting || batch.length === 0) return;
       inserting = true;
       const toInsert = batch.splice(0, batch.length);
-      await Repo.updateOne(
-        { remoteUrl: remoteUrl },
-        {
-          $push: {
-            history: {
-              $each: toInsert
+      try {
+        const result = await Timeline.updateOne(
+          { ownerName, repoName },
+          {
+            $push: {
+              history: { $each: toInsert }
             }
-          }
-        }
-      );
-      console.log("pushed patch!")
-      inserting = false;
+          },
+          { upsert: true } // create if missing
+        );
+        console.log("updateOne result:", result);
+      } catch (err) {
+        console.error("error pushing batch:", err);
+        // optionally push the items back on error:
+        batch.unshift(...toInsert);
+      } finally {
+        inserting = false;
+      }
     }
+
 
     await pipeline(
       req,
