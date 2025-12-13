@@ -1,8 +1,8 @@
-import historyPushController from "../controllers/historyPushController.ts"
+import pushController from "../controllers/pushController.ts"
 import express from "express"
 
 const router = express.Router()
 
-router.post("/history", historyPushController)
+router.post("/", pushController)
 
 export default router

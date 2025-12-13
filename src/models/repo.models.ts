@@ -24,5 +24,7 @@ repoSchema.index({ ownerId: 1, pinned: 1 }, { partialFilterExpression: { pinned:
 repoSchema.index({ repoName: "text", description: "text" });
 repoSchema.index({ userName: 1, visibility: 1, updatedAt: -1 }); // fast visitor query + sort
 repoSchema.index({ userName: 1, updatedAt: -1 }); // owner listing, fallback
+repoSchema.index({ userName: 1, repoName_normalized: 1 }, { unique: true });
+
 
 export default mongoose.model("Repo", repoSchema);
