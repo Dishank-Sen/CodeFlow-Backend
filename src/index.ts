@@ -12,6 +12,10 @@ import layoutRoute from "./routes/layoutRoute.ts"
 import profileRoute from "./routes/profileRoute.ts"
 import http from "http"
 import { Server } from "socket.io"
+import rootTimelineHandler from "./handler/rootTimeline.ts"
+import rootTimelineMaxIndexHandler from "./handler/rootTimelineMaxIndex.ts"
+import fileTimelineMaxIndexHandler from "./handler/fileTimelineMaxIndex.ts"
+import fileTimelineHandler from "./handler/fileTimeline.ts"
 
 dotenv.config()
 const app = express()
@@ -25,7 +29,7 @@ const io = new Server(server, {
     origin: allowedOrigins
   }
 })
-const repoPage = io.of("/repoPage")
+const repoPage = io.of("/codeView")
 const PORT = Number(process.env.PORT) || 3000
 connectDB()
 
@@ -33,6 +37,10 @@ repoPage.on("connection", (socket) => {
   console.log("connected")
 
   socket.emit("ping", ("pong"))
+  socket.on("rootTimeline:req", rootTimelineHandler(socket))
+  socket.on("rootTimeline:maxIndex:req", rootTimelineMaxIndexHandler(socket))
+  socket.on("fileTimeline:maxIndex:req", fileTimelineMaxIndexHandler(socket))
+  socket.on("fileTimeline:req", fileTimelineHandler(socket));
 
   socket.on("disconnect", () => {
     console.log("disconnected")

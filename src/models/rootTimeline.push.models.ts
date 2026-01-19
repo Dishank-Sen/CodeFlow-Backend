@@ -15,7 +15,7 @@ const rootTimelineSchema = new mongoose.Schema({
   // action type: create | remove | rename
   action: {
     type: String,
-    enum: ["create", "remove", "rename"],
+    enum: ["create", "remove", "rename", "move"],
     required: true,
   },
 

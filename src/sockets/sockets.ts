@@ -11,7 +11,7 @@ const allowedOrigins = [
 ]
 
 const io = new Server(server, {
-    path: "/api/v1/health/ping",
+    path: "/repo",
     cors: {
         origin: allowedOrigins
     }

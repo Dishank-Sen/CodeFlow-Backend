@@ -3,6 +3,7 @@ import allRepoController from "../controllers/allRepo.controller.ts"
 import newRepoController from "../controllers/newRepo.controller.ts"
 import authenticateToken from "../middleware/authenticateToken.ts"
 import profilePinnedRepoController from "../controllers/profile.pinnedRepository.controller.ts"
+import getFileTreeController from "../controllers/tree.controller.ts"
 import express from "express"
 
 const router = express.Router()
@@ -29,6 +30,12 @@ router.get(
     "/pinned",
     authenticateToken,
     profilePinnedRepoController
+)
+
+router.get(
+    "/:userName/:repoName/tree",
+    authenticateToken,
+    getFileTreeController
 )
 
 export default router
