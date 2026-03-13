@@ -1,0 +1,125 @@
+paths:
+  /api/v1/repos/all:
+    post:
+      summary: Get all public repositories of a user
+      description: Returns all repositories for the given user that have public visibility.
+      tags:
+        - Repositories
+      security:
+        - bearerAuth: []         # requires authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userName
+              properties:
+                userName:
+                  type: string
+                  example: dishank_01
+      responses:
+        "200":
+          description: Public repositories fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: repo fetched successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: 65c1234abc7890def1234567
+                        userName:
+                          type: string
+                          example: dishank_01
+                        repoName:
+                          type: string
+                          example: codeflow-backend
+                        description:
+                          type: string
+                          example: Backend service for Codeflow
+                        remoteUrl:
+                          type: string
+                          example: https://github.com/dishank/codeflow-backend.git
+                        visibility:
+                          type: string
+                          example: public
+                        history:
+                          type: array
+                          items:
+                            type: object
+                            description: History entry (shape depends on History schema)
+                        mainTimeline:
+                          type: array
+                          items:
+                            type: object
+                            description: Timeline entry (shape depends on MainTimeline schema)
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2025-01-01T10:00:00.000Z"
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          example: "2025-01-02T12:30:00.000Z"
+        "400":
+          description: Bad request — validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: BAD_REQUEST
+                  message:
+                    type: string
+                    example: userName is required
+        "401":
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: UNAUTHORIZED
+                  message:
+                    type: string
+                    example: No token provided
+        "403":
+          description: Invalid or expired token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: INVALID-TOKEN
+                  message:
+                    type: string
+                    example: Invalid or expired token
+        "500":
+          description: Server error while fetching repositories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: SERVER-ERROR
+                  message:
+                    type: string
+                    example: internal server error

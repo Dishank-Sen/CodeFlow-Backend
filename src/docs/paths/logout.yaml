@@ -1,0 +1,39 @@
+paths:
+  /api/v1/auth/logout:
+    post:
+      summary: User logout
+      description: Clears the JWT cookie and logs the user out.
+      tags:
+        - Auth
+      responses:
+        "200":
+          description: Logout successful
+          headers:
+            Set-Cookie:
+              description: >
+                Clears the jwt cookie by setting it with an expired date.
+                Example: `jwt=; HttpOnly; SameSite=Lax; Max-Age=0`
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Logout successful
+
+        "500":
+          description: Server error during logout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: SERVER-ERROR
+                  message:
+                    type: string
+                    example: Server error during logout

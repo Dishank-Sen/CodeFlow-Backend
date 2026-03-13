@@ -1,0 +1,63 @@
+paths:
+  /api/v1/profile/navbar:
+    get:
+      summary: Get navbar profile data of authenticated user
+      description: Returns minimal profile information used specifically for navbar components.
+      tags:
+        - Profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: User navbar data fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User data fetched
+                  data:
+                    type: object
+                    properties:
+                      userId:
+                        type: string
+                        example: 32k4h3krjkn3
+                      userName:
+                        type: string
+                        example: dishank_01
+                      email:
+                        type: string
+                        example: dishank@gmail.com
+                      profileImg:
+                        type: string
+                        example: https://cloudinary.com/abc/user.png
+
+        "401":
+          description: No authenticated user data available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: NO-USER-INFO
+                  message:
+                    type: string
+                    example: No user info found
+
+        "500":
+          description: Internal server error while fetching navbar profile data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: SERVER-ERROR
+                  message:
+                    type: string
+                    example: Server error

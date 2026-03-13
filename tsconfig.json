@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@codeflow/auth-utils": ["../../packages/auth-utils/src/index.ts"],
+      "@codeflow/auth-utils/*": ["../../packages/auth-utils/src/*"],
+      "@codeflow/types": ["../../packages/types/src/index.ts"],
+      "@codeflow/types/*": ["../../packages/types/src/*"],
+      "@codeflow/validators": ["../../packages/validators/src/index.ts"],
+      "@codeflow/validators/*": ["../../packages/validators/src/*"],
+      "@codeflow/logger": ["../../packages/logger/src/index.ts"],
+      "@codeflow/logger/*": ["../../packages/logger/src/*"]
+    }
+  },
+  "include": ["src", "scripts"],
+  "exclude": ["node_modules", "tests"],
+  "ts-node": {
+    "esm": true,
+    "experimentalEsm": true,
+    "transpileOnly": true,
+    "skipLibCheck": true,
+    "compilerOptions": {
+      "module": "esnext",
+      "moduleResolution": "node"
+    }
+  }
+}

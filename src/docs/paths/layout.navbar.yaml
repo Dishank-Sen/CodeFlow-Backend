@@ -1,0 +1,63 @@
+paths:
+  /api/v1/layout/navbar:
+    get:
+      summary: Get navbar layout data for the current user
+      description: Returns minimal user information required to render the navbar.
+      tags:
+        - Layout
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: User info for navbar
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User found
+                  data:
+                    type: object
+                    properties:
+                      userId:
+                        type: string
+                        example: 2sdk4534nkjhn
+                      userName:
+                        type: string
+                        example: dishank_01
+                      email:
+                        type: string
+                        example: dishank@gmail.com
+                      profileImg:
+                        type: string
+                        example: https://cloudinary.com/abc/user.png
+
+        "401":
+          description: No user info / not authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: NO-USER-INFO
+                  message:
+                    type: string
+                    example: No user info found
+
+        "500":
+          description: Server error while fetching navbar data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: SERVER-ERROR
+                  message:
+                    type: string
+                    example: internal server error

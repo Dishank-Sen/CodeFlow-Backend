@@ -1,0 +1,82 @@
+paths:
+  /api/v1/repo/pinned:
+    get:
+      summary: Get pinned repositories of authenticated user
+      description: >
+        Returns the list of repositories where `pinned = true` for the authenticated user.
+        The endpoint returns an array of repo documents (selected fields) belonging to the authenticated user.
+      tags:
+        - Profile
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Pinned repositories retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "user detail retrieved successfully"
+                  data:
+                    type: array
+                    description: Array of pinned repository objects (limited fields)
+                    items:
+                      type: object
+                      properties:
+                        repoName:
+                          type: string
+                          example: "codeflow"
+                        description:
+                          type: string
+                          example: "Personal codeflow project"
+                        stars:
+                          type: integer
+                          example: 120
+                        forks:
+                          type: integer
+                          example: 20
+        "401":
+          description: Missing or invalid user authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "NO-USER-INFO"
+                  message:
+                    type: string
+                    example: "No user info found"
+        "404":
+          description: No pinned repositories for the authenticated user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "NO-PINNED-REPO"
+                  message:
+                    type: string
+                    example: "no pinned repository"
+        "500":
+          description: Server error while retrieving pinned repositories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "SERVER-ERROR"
+                  message:
+                    type: string
+                    example: "internal server error"
+                  data:
+                    nullable: true
+                    example: null
